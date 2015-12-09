@@ -83,7 +83,8 @@
       var prepareOptions = function (options) {
         options = options || {};
         if (dpdConfig.useBearerAuth) {
-          options.headers = { "Authorization": "Bearer" + (_sessionId ? " " + _sessionId : "") };
+          options.headers = options.headers || {};
+          options.headers = angular.extend({ "Authorization": "Bearer" + (_sessionId ? " " + _sessionId : "") }, options.headers);
         } else {
           options = angular.extend({ withCredentials: true }, options);
         }
