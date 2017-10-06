@@ -63,8 +63,9 @@
         };
       }
 
-      var ef = function (data, status, headers, config) {
-        dpd.errors.push(data);
+      var ef = function (response) {
+        dpd.errors.push(response.data);
+        throw response;
       };
 
       var isComplexQuery = function (obj) {
