@@ -119,21 +119,18 @@
 
         dpd[collection].put = function (id, data, options) {
           options = prepareOptions(options);
-          return $http.put(serverRoot + '/' + collection + '/' + id, data, options).error(ef);
+          return $http.put(serverRoot + '/' + collection + '/' + id, data, options).catch(ef);
         };
 
         dpd[collection].post = function (data, options) {
           options = prepareOptions(options);
           return $http.post(serverRoot + '/' + collection + '/', data, options)
-            .success(function(data, status, headers){
-              if (headers("X-Session-Token")) console.log(headers("X-Session-Token"));
-            })
-            .error(ef);
+            .catch(ef);
         };
 
         dpd[collection].del = dpd[collection].delete = function (id, options) {
           options = prepareOptions(options);
-          return $http.delete(serverRoot + '/' + collection + '/' + id, options).error(ef);
+          return $http.delete(serverRoot + '/' + collection + '/' + id, options).catch(ef);
         };
 
         dpd[collection].save = function (obj, options) {
@@ -158,11 +155,11 @@
           }
 
           return $http(options)
-            .success(function(data, status, headers){
-              var sessionToken = headers("X-Session-Token");
+            .then(function(response){
+              var sessionToken = response.headers("X-Session-Token");
               if (sessionToken) dpd.setSessionId(sessionToken);
             })
-            .error(ef);
+            .catch(ef);
         };
 
         dpd[collection].on = function (scope, event, f) {
