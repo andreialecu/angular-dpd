@@ -114,7 +114,7 @@
         dpd[collection] = {};
 
         dpd[collection].get = function (query, options) {
-          return doGet(collection, query, options).error(ef);
+          return doGet(collection, query, options).catch(ef);
         };
 
         dpd[collection].put = function (id, data, options) {
