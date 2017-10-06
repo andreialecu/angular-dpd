@@ -159,6 +159,7 @@
             .then(function(response){
               var sessionToken = response.headers("X-Session-Token");
               if (sessionToken) dpd.setSessionId(sessionToken);
+              return response;
             })
             .catch(ef);
         };
