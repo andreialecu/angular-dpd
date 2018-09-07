@@ -72,3 +72,33 @@ For low-level access, the raw socket is exposed as `dpd.socket.rawSocket`.
 
 Note: We inject $scope in the call so that the library can automatically remove the events if the $scope is $destroyed (such as when a route change occurs).
 	
+dpd.users
+---------------------
+The dpd.users collection traditionally allows access to several functions including
+dpd.users.me(), dpd.users.login, dpd.users.logout.  These are currently not well supported, but may be used as follows:
+
+##dpd.users.me()
+use ```dpd.users.get('me')``` - this seems to work as long as your sid cookie is set
+
+##dpd.users.login
+use:
+```
+function login(user){
+	// note the dependancies on dpdConfig, $http and $cookies.  
+	// This returns a promise, so you can move $state.go to a .then() handler.
+    return $http.post( dpdConfig.serverRoot + 'users/login', { username: user.username, password: user.password})
+      .then(
+      function(session, error) {
+        if (error) {
+          alert(error.message);
+          return false;
+        } else {
+          $cookies.sid = session.data.id; // set the sid cookie
+          $state.go('loginSuccess');
+        }
+      });
+  }
+```
+
+## dpd.users.logout()
+Use dpd.users.get('logout')
